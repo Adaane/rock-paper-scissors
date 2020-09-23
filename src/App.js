@@ -38,11 +38,50 @@ function App() {
     }, [])
     //  On change le state de l'application avec le choix des joueurs 
     handlePlayers(newPlayers)
+    ChooseWinner(newPlayers)
   };
 
-  // const ChooseWinner = (players) => {
+  const ChooseWinner = (players) => {
+    const playerOne = players[0]
+    const playerTwo = players[1]
 
-  // }
+    // Tableau des victoire 
+    const arrayWinner = {
+      "SvsR" : "R",
+      "RvsS" : "R",
+      "SvsP" : 'S',
+      "PvsS" : 'S',
+      "RvsP" : "P",
+      "PvsR" : "P",
+    };
+
+    // Evaluation du game
+
+    if (playerOne.choice.id && playerTwo.choice.id ){
+    // On regarde si il y a une égalité 
+      if (playerOne.choice.id === playerTwo.choice.id) {
+        console.log('Egalité');
+      }
+
+      const evaluateGame = `${playerOne.choice.id}vs${playerTwo.choice.id}`
+
+      Object.getOwnPropertyNames(arrayWinner).map((item, index) => {
+        if (evaluateGame === item ) {
+         const winnner =  players.reduce((acc, curr) => {
+            if (curr.choice.id === arrayWinner[item]) {
+              acc = curr
+            }
+            return acc
+          }, '')
+          
+        }
+      })
+
+      // TODO: Attribuer les Scores de chacun
+    }
+
+
+  }
 
   return (
     <div className="App" style={{'display': 'flex'}}>
