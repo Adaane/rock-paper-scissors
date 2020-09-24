@@ -2,16 +2,26 @@ import React, {useState} from 'react'
 import './App.css';
 import Player from './components/Player';
 import Opponent from './components/Opponent';
-import {initialPlayers, arrayWinner} from './misc'
+import {initialPlayers, arrayWinner, weapons} from './misc'
 
 
 function App() {
 
 
   const [players, handlePlayers] = useState(initialPlayers);
-  const [opponent, setOpponent] =  useState('')
+  const [opponent, setOpponent] =  useState({})
   const [value, setValue] =  useState('')
 
+  const setPlayers = (opponent) => {
+    if (opponent) {
+      players.push(opponent)
+    }
+  }
+
+  const setRandomChoice = (choices) => {
+    let index = Math.floor(Math.random() * choices.length);
+    return choices[index]
+  }
 
   const onPlayerChoice = (player, choice) => {
 
@@ -36,6 +46,8 @@ function App() {
 
     const playerOne = players[0]
     const playerTwo = players[1]
+
+    playerOne.choice = setRandomChoice(weapons)
 
       // Remise à zéro des choix des joueurs
       const resetPlayer = () => handlePlayers(players.reduce((acc, curr) => {
@@ -73,32 +85,34 @@ function App() {
   }
 
   const handleChange = (e) => {
-    console.log('value', e.target.value);
     setValue(e.target.value)
-
   }
 
 
   const handleSubmit = () => {
-    setOpponent(value);
+    if (players.length === 2 ) return true
+    setOpponent(
+      opponent.name = value,
+      opponent.choice = '',
+      opponent.score = 0
+    );
     setValue('')
+    setPlayers(opponent)
   }
 
   return (
     <>
-    <Opponent onChange={handleChange} onSubmit={handleSubmit}/>
-    <div className="App" style={{'display': 'flex'}}>
-      {
-        players.map((player, index) => {
-          return <Player score={player.score} 
-                    onPlayerChoice={onPlayerChoice} 
-                    name={player.name}
-                    choice={player.choice}
-                    key={index}/>
-        })
-      }
-    </div>
-    </>
+    <Opponent onChange={handleChange} onSubmit={handleSubmit} name={opponent.name}/>
+      <div className="App" style={{'display': 'flex'}}>
+        {
+          opponent && players[1] &&
+            <Player score={players[1].score} 
+                        onPlayerChoice={onPlayerChoice} 
+                        name={players[1].name}
+                        choice={players[1].choice} />
+        }   
+      </div>
+      </>
   );
 }
 

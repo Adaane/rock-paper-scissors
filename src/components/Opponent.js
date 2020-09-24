@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Opponent(props) {
-    const {onChange, onSubmit} = props
+    const {onChange, onSubmit, name} = props
     return (
         <div>
             <label>Ton Prénom</label> 
@@ -10,6 +10,9 @@ export default function Opponent(props) {
                 name="Name" 
                 onChange={onChange}/> 
             <button onClick={onSubmit} >Valider</button>
+            {
+                name && <div>Your name is {name}</div>
+            }
         </div>
     )
 }

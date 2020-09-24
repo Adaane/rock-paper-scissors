@@ -1,5 +1,5 @@
 import React from 'react'
-import {items} from '../misc'
+import {weapons} from '../misc'
 
 export default function Player(props) {
     return (
@@ -8,10 +8,10 @@ export default function Player(props) {
             <h2>Choisis ton arme</h2>
 
             <ul>
-            {items.map( (item, index) => {
+            {weapons.map( (weapon, index) => {
                 return <li key={index+1} onClick={() => {
-                    props.onPlayerChoice(props.name, item)
-                }}> {item.name} </li>
+                    props.onPlayerChoice(props.name, weapon)
+                }}> {weapon.name} </li>
             })}
             </ul>
 

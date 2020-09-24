@@ -3,15 +3,10 @@ export const initialPlayers = [
       name: 'Adaane',
       choice: '',
       score: 0
-    },
-    {
-      name: 'recruteur',
-      choice: '',
-      score: 0
     }
 ]
 
-export const items = [{
+export const weapons = [{
     name: 'Pierre',
     id: 'R'
 },
