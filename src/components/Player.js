@@ -1,23 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
+import {items} from '../misc'
 
 export default function Player(props) {
-    // Le choix du Jouer
-    // const [choice, setChoice] = useState('');
-
-    const items = [{
-        name: 'Pierre',
-        id: 'R'
-    },
-    {
-        name: 'Papier',
-        id: 'P'
-    },
-    {
-        name: 'Ciseaux',
-        id: 'S'
-    }
-]
-
     return (
         <div>
             <h1>Player  : {props.name}</h1>

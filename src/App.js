@@ -1,25 +1,13 @@
 import React, {useState} from 'react'
 import './App.css';
 import Player from './components/Player';
-
-
+import {initialPlayers, arrayWinner} from './misc'
 
 
 function App() {
 
 
-  const [players, handlePlayers] = useState(
-    [
-      {
-        name: 'Adaane',
-        choice: ''
-      },
-      {
-        name: 'recruteur',
-        choice: ''
-      }
-    ]
-  );
+  const [players, handlePlayers] = useState(initialPlayers);
 
 
   const onPlayerChoice = (player, choice) => {
@@ -42,42 +30,42 @@ function App() {
   };
 
   const ChooseWinner = (players) => {
+
     const playerOne = players[0]
     const playerTwo = players[1]
 
-    // Tableau des victoire 
-    const arrayWinner = {
-      "SvsR" : "R",
-      "RvsS" : "R",
-      "SvsP" : 'S',
-      "PvsS" : 'S',
-      "RvsP" : "P",
-      "PvsR" : "P",
-    };
+      // Remise à zéro des choix des joueurs
+      const resetPlayer = () => handlePlayers(players.reduce((acc, curr) => {
+        curr.choice = ''
+        return acc = [...acc, curr]
+      }, []))
 
-    // Evaluation du game
-
+    // Si les deux joueurs on séléctionné leurs choix
     if (playerOne.choice.id && playerTwo.choice.id ){
     // On regarde si il y a une égalité 
       if (playerOne.choice.id === playerTwo.choice.id) {
-        console.log('Egalité');
+        resetPlayer()
       }
 
       const evaluateGame = `${playerOne.choice.id}vs${playerTwo.choice.id}`
 
       Object.getOwnPropertyNames(arrayWinner).map((item, index) => {
         if (evaluateGame === item ) {
+
          const winnner =  players.reduce((acc, curr) => {
             if (curr.choice.id === arrayWinner[item]) {
               acc = curr
             }
             return acc
           }, '')
-          
+
+          handlePlayers(players.reduce((acc, curr) => {
+            if (winnner.name === curr.name) curr.score++
+          }, []))
+
         }
       })
-
-      // TODO: Attribuer les Scores de chacun
+      resetPlayer()
     }
 
 
@@ -87,7 +75,7 @@ function App() {
     <div className="App" style={{'display': 'flex'}}>
       {
         players.map((player, index) => {
-          return <Player score={0} 
+          return <Player score={player.score} 
                     onPlayerChoice={onPlayerChoice} 
                     name={player.name}
                     choice={player.choice}
