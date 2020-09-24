@@ -5,7 +5,7 @@ export default function Player(props) {
     return (
         <div>
             <h1>Player  : {props.name}</h1>
-            <h2>Choisis en un</h2>
+            <h2>Choisis ton arme</h2>
 
             <ul>
             {items.map( (item, index) => {

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './App.css';
 import Player from './components/Player';
+import Opponent from './components/Opponent';
 import {initialPlayers, arrayWinner} from './misc'
 
 
@@ -8,6 +9,8 @@ function App() {
 
 
   const [players, handlePlayers] = useState(initialPlayers);
+  const [opponent, setOpponent] =  useState('')
+  const [value, setValue] =  useState('')
 
 
   const onPlayerChoice = (player, choice) => {
@@ -67,11 +70,23 @@ function App() {
       })
       resetPlayer()
     }
+  }
 
+  const handleChange = (e) => {
+    console.log('value', e.target.value);
+    setValue(e.target.value)
 
   }
 
+
+  const handleSubmit = () => {
+    setOpponent(value);
+    setValue('')
+  }
+
   return (
+    <>
+    <Opponent onChange={handleChange} onSubmit={handleSubmit}/>
     <div className="App" style={{'display': 'flex'}}>
       {
         players.map((player, index) => {
@@ -83,6 +98,7 @@ function App() {
         })
       }
     </div>
+    </>
   );
 }
 
